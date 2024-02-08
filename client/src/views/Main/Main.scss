@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import "../../styles/colors.scss";
+
+#main {
+  grid-column: 1;
+  grid-column-end: -1;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 0px 1em;
+
+  height: 100vh;
+  background-image: url("../../assets/images/main-bg-2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: center;
+  justify-content: space-around;
+
+  .content__container {
+    display: flex;
+    grid-column-start: 5;
+    grid-column-end: -1;
+
+    flex-direction: column;
+    color: #fff;
+    span {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 10vw;
+    }
+    .name {
+      font-size: 5vh;
+    }
+  }
+
+  .auth__container {
+    grid-column: 1 / span 3;
+    display: flex;
+    justify-content: center;
+    grid-column-start: 1;
+    grid-column-end: 5;
+  }
+}
