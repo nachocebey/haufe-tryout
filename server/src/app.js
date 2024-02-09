@@ -2,7 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const routes = require("./routes/userRoutes");
-const cors = require('cors');
+const cors = require("cors");
 const app = express();
 
 // Connect to MongoDB
@@ -11,7 +11,6 @@ mongoose.connect("mongodb://localhost:27017/haufe-ddbb");
 app.use(cors());
 app.use(express.json());
 
-// Usar las rutas definidas en routes.js
 app.use("", routes);
 
 app.get("/", (req, res) => {

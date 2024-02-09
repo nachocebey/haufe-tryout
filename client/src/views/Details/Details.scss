@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Single+Day&family=Sixtyfour&display=swap");
+
+#details {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  height: 100vh;
+  color: #fff;
+
+  .image {
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 23rem;
+    svg {
+      cursor: pointer;
+      min-width: 2rem;
+    }
+    svg {
+      fill: #fff;
+    }
+    .favorite {
+      fill: #ef4444;
+    }
+    svg:hover {
+      fill: #ef4444;
+    }
+    .name {
+      font-family: "Bebas Neue", sans-serif;
+      font-family: "Single Day", cursive;
+      font-family: "Sixtyfour", sans-serif;
+      font-size: 2em;
+    }
+  }
+
+  .details-container {
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 15rem;
+  }
+
+  p {
+    display: flex;
+    place-content: space-between;
+    width: 100%;
+    span {
+      margin-left: 0.5rem;
+    }
+  }
+}

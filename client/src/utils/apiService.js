@@ -1,12 +1,18 @@
 const API_BASE_URL = "http://localhost:8080/api";
 
-export const apiService = async (method = "GET", endpoint, body = null) => {
+export const apiService = async (
+  method = "GET",
+  endpoint,
+  body = null,
+  customHeaders
+) => {
   const url = `${API_BASE_URL}/${endpoint}`;
 
   const options = {
     method,
     headers: {
       "Content-Type": "application/json",
+      ...customHeaders,
     },
     body: body ? JSON.stringify(body) : null,
   };
@@ -29,14 +35,5 @@ export const apiService = async (method = "GET", endpoint, body = null) => {
         status: 500,
       };
     }
-  }
-};
-
-export const saveUserIdToLocalStorage = (userId) => {
-  try {
-    localStorage.setItem("userId", userId);
-    console.log("UserId has been saved to localStorage.");
-  } catch (error) {
-    console.error("Error saving UserId to localStorage:", error);
   }
 };

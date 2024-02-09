@@ -23,9 +23,9 @@ describe("Routes and Controllers Test", () => {
       password: "password123",
     });
 
-    userId = response.body.userId;
+    userId = response.body.user._id;
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveProperty("userId");
+    expect(response.body.user).toHaveProperty("_id");
     expect(response.body).toHaveProperty("message", "Login successful");
   });
 
@@ -47,9 +47,11 @@ describe("Routes and Controllers Test", () => {
   });
 
   it("Should load characters", async () => {
-    const response = await request(app).get("/api/characters");
+    const response = await request(app)
+      .get("/api/characters")
+      .set("userid", userId);
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveProperty("results");
+    expect(response.body).toHaveProperty("data");
   });
 
   it("Should save favorites from user", async () => {
@@ -57,7 +59,7 @@ describe("Routes and Controllers Test", () => {
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty(
       "message",
-      "Character marked as favorite"
+      "Character favoreite list updated"
     );
   });
 

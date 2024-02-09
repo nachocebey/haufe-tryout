@@ -43,7 +43,9 @@ router.post(
   userController.addFavoriteCharacter
 );
 
-router.get("/api/characters", userController.getAllCharacters);
+router.get("/api/characters/:id", userController.getCharacterById);
+
+router.get("/api/characters/", userController.getAllCharacters);
 
 router.get("/api/users", userController.getAllUsers);
 

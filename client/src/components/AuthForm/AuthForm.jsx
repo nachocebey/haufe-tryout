@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { saveUserIdToLocalStorage, apiService } from "../../utils/apiService";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "../../redux/slices/userSlice";
+import { apiService } from "../../utils/apiService";
 
 import "./AuthForm.scss";
 
@@ -12,6 +14,7 @@ const AuthForm = ({ isLogin, onLogin }) => {
   const [loginFailed, setLoginFailed] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -29,9 +32,8 @@ const AuthForm = ({ isLogin, onLogin }) => {
         userData
       );
       if (status === 200) {
-        saveUserIdToLocalStorage(data.userId);
-        onLogin();
-        console.log("Success:", data);
+        dispatch(setUserInfo(data.user));
+        onLogin(data);
       }
     } catch (error) {
       setLoginFailed(error.message);
@@ -46,6 +48,7 @@ const AuthForm = ({ isLogin, onLogin }) => {
             <label>Name:</label>
             <input
               type="text"
+              id="name"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -56,6 +59,7 @@ const AuthForm = ({ isLogin, onLogin }) => {
           <label>Email:</label>
           <input
             type="email"
+            id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -64,21 +68,22 @@ const AuthForm = ({ isLogin, onLogin }) => {
           <label>Password:</label>
           <input
             type="password"
+            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">{isLogin ? "Log in" : "Sign in"}</button>
+        <button type="submit" id="submit_button">{isLogin ? "Log in" : "Sign in"}</button>
         {loginFailed ? <p className="submit__error">{loginFailed}</p> : null}
         {isLogin ? (
           <p>
             Don&apos;t have an account yet?{" "}
-            <a onClick={() => navigate("/register")}>Sign up</a>
+            <a data-cypress="registerLink" onClick={() => navigate("/register")}>Sign up</a>
           </p>
         ) : (
           <p>
             You already have an account?{" "}
-            <a onClick={() => navigate("/login")}>Log in</a>
+            <a data-cypress="loginLink" onClick={() => navigate("/login")}>Log in</a>
           </p>
         )}
       </form>

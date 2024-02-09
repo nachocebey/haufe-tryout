@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const axios = require("axios");
-const { body, validationResult } = require("express-validator");
 const User = require("../models/userModel");
 
 exports.createUser = async (req, res) => {
@@ -21,7 +20,7 @@ exports.createUser = async (req, res) => {
     });
 
     await newUser.save();
-    res.json({ userId: newUser._id, message: "User created successfully" });
+    res.json({ user: newUser, message: "User created successfully" });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Server error", details: error.message });
@@ -40,7 +39,7 @@ exports.loginUser = async (req, res) => {
     const isCorrectPassword = await bcrypt.compare(password, user.password);
 
     if (isCorrectPassword) {
-      res.json({ userId: user._id, message: "Login successful" });
+      res.json({ user: user, message: "Login successful" });
     } else {
       res.status(401).json({ error: "Incorrect credentials" });
     }
@@ -62,12 +61,17 @@ exports.addFavoriteCharacter = async (req, res) => {
 
     if (!user.favoritesIds.includes(favoriteId.toString())) {
       user.favoritesIds.push(favoriteId);
+    } else {
+      const index = user.favoritesIds.indexOf(favoriteId.toString());
+      if (index !== -1) {
+        user.favoritesIds.splice(index, 1);
+      }
     }
 
     await user.save();
 
     res.json({
-      message: "Character marked as favorite",
+      message: "Character favoreite list updated",
     });
   } catch (error) {
     console.error("Error:", error);
@@ -77,15 +81,58 @@ exports.addFavoriteCharacter = async (req, res) => {
 
 exports.getAllCharacters = async (req, res) => {
   try {
+    const authorizationHeader = req.headers.userid;
+    if (!authorizationHeader) {
+      return res
+        .status(401)
+        .json({ error: "Unauthorized - Missing Authorization Header" });
+    }
+
     const pageNumber = req.query.page || 1;
     const externalCharactersApiUrl = `https://rickandmortyapi.com/api/character/?page=${pageNumber}`;
     const response = await axios.get(externalCharactersApiUrl);
     const externalData = response.data;
 
-    res.json(externalData);
+    res.json({
+      data: externalData.results,
+      totalPages: externalData.info.pages,
+    });
   } catch (error) {
     console.error(`Error: ${error.message}`);
     res.status(500).json({ error: "Server error", details: error.message });
+  }
+};
+
+exports.getCharacterById = async (req, res) => {
+  try {
+    const characterId = req.params.id;
+
+    const authorizationHeader = req.headers.userid;
+    if (!authorizationHeader) {
+      return res
+        .status(401)
+        .json({ error: "Unauthorized - Missing Authorization Header" });
+    }
+
+    const user = await User.findById(authorizationHeader);
+
+    const externalCharacterApiUrl = `https://rickandmortyapi.com/api/character/${characterId}`;
+    const response = await axios.get(externalCharacterApiUrl);
+    const characterData = {
+      ...response.data,
+      isFavorite: user.favoritesIds.includes(characterId),
+    };
+
+    res.json({
+      data: characterData,
+    });
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    if (error.response && error.response.status === 404) {
+      res.status(404).json({ error: "Character not found" });
+    } else {
+      res.status(500).json({ error: "Server error", details: error.message });
+    }
   }
 };
 

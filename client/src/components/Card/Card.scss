@@ -1,0 +1,58 @@
+@import "../../styles/colors.scss";
+
+.card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 19rem;
+  width: 16rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  .image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  img {
+    height: 100%;
+    width: 100%; /* Añade esto para ocupar todo el ancho del contenedor .image */
+    object-fit: cover; /* Ajusta el tamaño y recorta la imagen para que se ajuste */
+  }
+
+  .content {
+    padding-right: 1rem;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    background-color: #3f3b37;
+    color: #fff;
+
+    .data {
+      display: flex;
+      flex-direction: column;
+      h2 {
+        margin: 0;
+        color: $olivine;
+      }
+      p {
+        margin: 0;
+      }
+      .status {
+        font-size: 12px;
+        margin-bottom: 0.4rem;
+      }
+      .location {
+        font-size: 15px;
+        color: gray;
+      }
+    }
+  }
+}

@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const userId = localStorage.getItem("userId");
-  const isAuthenticated = !!userId;
+  const user = useSelector((state) => state.user);
+  const isAuthenticated = user.id;
 
   return isAuthenticated ? (
     <Component {...rest} />

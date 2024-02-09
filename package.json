@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "npm-run-all": "^4.1.5"
+  },
+  "scripts": {
+    "start--all": "npm-run-all --parallel start:frontend start:server",
+    "install--all": "npm-run-all --parallel install:frontend install:server",
+    "start:frontend": "cd client && npm run dev",
+    "start:server": "cd server && npm start",
+    "install:frontend": "cd client && npm install",
+    "install:server": "cd server && npm install"
+  }
+}

@@ -44,8 +44,7 @@ input[type="reset"] {
 }
 
 #root {
+  height: 100vh;
   display: grid;
-  grid-auto-columns: 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: 0px 1em;
+  align-items: start;
 }

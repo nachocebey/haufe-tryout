@@ -2,8 +2,8 @@
 @import "../../styles/colors.scss";
 
 #main {
+  grid-row: 1;
   grid-column: 1;
-  grid-column-end: -1;
   display: grid;
   grid-auto-columns: 1fr;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;

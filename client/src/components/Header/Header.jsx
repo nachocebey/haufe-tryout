@@ -1,18 +1,34 @@
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+import profilePic from "../../assets/images/morty_smith.png";
 import "./Header.scss";
+import { clearUserInfo } from "../../redux/slices/userSlice";
 
 function Header() {
   const navigate = useNavigate();
-  const AUTH_KEY = "userId";
-  const isAuthenticated = localStorage.getItem(AUTH_KEY) ? true : false;
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  const isAuthenticated = user.id ? true : false;
 
   const handleLogout = () => {
-    localStorage.removeItem("userId");
+    dispatch(clearUserInfo());
     navigate("login");
   };
 
   return (
     <div className="header">
+      <div className="profile-info__container">
+        {isAuthenticated && user ? (
+          <>
+            <div className="profile-pic">
+              <img src={profilePic} alt="Profile pic" loading="lazy" />
+            </div>
+            <span className="name">{user.name}</span>
+          </>
+        ) : null}
+      </div>
       {!isAuthenticated ? (
         <div className="links__container">
           <a onClick={() => navigate("login")}>Log in</a>|

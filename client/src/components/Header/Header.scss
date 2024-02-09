@@ -3,22 +3,52 @@
 .header {
   display: flex;
   color: white;
-  height: 4em;
+  min-height: 4em;
   background-color: $davys-gray;
-  justify-content: flex-end;
-  position: absolute;
+  justify-content: space-between;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-}
+  z-index: 1000;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0),
+    rgba(96, 91, 86, 1)
+  );
+  grid-row: 1;
+  grid-column: 1;
+  height: fit-content;
 
-.links__container {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  a:hover {
-    color: #9ca3af;
+  .profile-info__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+
+    .profile-pic {
+      border-radius: 9999px;
+      border: 2px solid $olivine;
+      width: 3.5rem;
+      height: 3.5rem;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+      }
+    }
   }
-  padding-right: 20px;
+
+  .links__container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    a:hover {
+      color: #9ca3af;
+      cursor: pointer;
+    }
+  }
 }
