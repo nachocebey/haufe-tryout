@@ -15,7 +15,7 @@ Make sure you have [Node.js](https://nodejs.org/) installed on your system befor
 1. Clone the repository:
 
     ```bash
-    git clone [https://github.com/your-username/your-project.git](https://github.com/nachocebey/haufe-tryout)
+    git clone [https://github.com/nachocebey/haufe-tryout](https://github.com/nachocebey/haufe-tryout)
     ```
 
 2. Navigate to the project folder:
